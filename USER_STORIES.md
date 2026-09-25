@@ -142,3 +142,10 @@ read-only MCP access to the local development database, so that I can
 inspect schema and data directly while any accidental write attempt is
 blocked at the database level, not just by the tool's own claims.
 *Related requirements: REQ-047, REQ-048*
+
+---
+
+**US-029** — As a user updating my profile settings, I want my password
+to remain unchanged when I do not provide a new one, so that I can update
+my bio, email, or username without accidentally invalidating my password.
+*Related requirements: REQ-049*

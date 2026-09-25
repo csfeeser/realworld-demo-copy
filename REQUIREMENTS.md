@@ -405,3 +405,42 @@ tools are not added to any auto-approval allowlist in
 `.claude/settings.json`, so the first use of the server in a session
 requires the normal Claude Code permission prompt rather than running
 unattended.
+
+### REQ-049 — Password is re-hashed only when explicitly provided in a profile update
+**Bug fix — supersedes the "Special case" paragraph in REQ-011.**
+
+When processing a `PUT /api/user` request, the password stored in the
+database is overwritten only when the `password` key is present and not
+`undefined` in the request body. If the `password` key is absent (or
+resolves to `undefined` during destructuring), the existing stored hash
+is left unchanged and the update succeeds normally.
+
+The original implementation contained a tautological condition
+(`password !== undefined || password !== ""`) that was always `true`,
+causing `bcrypt.hash(undefined)` to be called — and to throw — on every
+request that omitted the `password` key, returning a 500 error. In
+normal frontend use the settings form always sends `password: ""`
+(because the model's `toJSON()` strips the hash before sending it to the
+client, leaving the field as `""`), so the 500 path was masked in
+practice; however, any client or test that omits the field entirely would
+have hit it.
+
+The correct condition is `if (password !== undefined)`. Submitted values
+of `""` or any non-empty string are still hashed and saved (preserving
+the behavior described in REQ-011's special case for the empty-string
+scenario).
+
+### REQ-050 — Correction to REQ-049: empty-string password is also treated as "no change"
+**Correction to REQ-049 — replaces the condition stated there.**
+
+The condition implemented is `if (password !== undefined && password !== "")`,
+not just `if (password !== undefined)`. Both a missing `password` key
+(resolves to `undefined`) and an explicit `password: ""` leave the
+stored hash unchanged.
+
+This matters because the settings form always sends `password: ""` when
+the user has not typed a new password (the stored hash is stripped by the
+model's `toJSON()` before reaching the client). Without the `&&`
+condition, every settings save without a new password would re-hash an
+empty string and silently replace the user's real password — breaking
+their next login.
