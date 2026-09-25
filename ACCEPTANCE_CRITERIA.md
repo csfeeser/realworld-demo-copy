@@ -404,6 +404,32 @@ changed.
   use of the server in a session requires an interactive permission
   prompt.
 
+### US-029 — Switch between light and dark themes
+*(REQ-049, REQ-050, REQ-051)*
+
+- **AC-080** — Given the site is loaded, when any page is inspected, then a
+  theme toggle control is present in the navbar for both authenticated and
+  unauthenticated visitors.
+- **AC-081** — Given the theme toggle is activated, when the theme changes,
+  then the new theme is applied immediately without a page reload, and
+  every existing page and component remains legible and usable in the
+  resulting theme (no unreadable text, no invisible borders or icons).
+- **AC-082** — Given the dark theme is not selected, when any existing page
+  is viewed, then it renders identically to its appearance before this
+  feature existed.
+- **AC-083** — Given a visitor selects a theme via the toggle, when they
+  reload the page or return in a new visit on the same browser, then the
+  previously selected theme is still active — regardless of whether they
+  are logged out, logged in, or logged in as a different account.
+- **AC-084** — Given a visitor who has never used the theme toggle in their
+  browser, when the site loads, then it uses the OS/browser-reported
+  color-scheme preference if one is available, or the light theme if none
+  is available.
+- **AC-085** — Given a visitor has used the theme toggle at least once in
+  their browser, when the OS/browser color-scheme preference later
+  changes, then the site continues to use the visitor's explicitly
+  selected theme rather than following the new OS/browser preference.
+
 ---
 
 ## Traceability Matrix
@@ -458,3 +484,6 @@ changed.
 | REQ-046 | US-027 | AC-074, AC-075 |
 | REQ-047 | US-028 | AC-076, AC-077 |
 | REQ-048 | US-028 | AC-078, AC-079 |
+| REQ-049 | US-029 | AC-080–AC-082 |
+| REQ-050 | US-029 | AC-083 |
+| REQ-051 | US-029 | AC-084, AC-085 |
