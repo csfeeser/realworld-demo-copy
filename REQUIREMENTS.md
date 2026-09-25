@@ -405,3 +405,17 @@ tools are not added to any auto-approval allowlist in
 `.claude/settings.json`, so the first use of the server in a session
 requires the normal Claude Code permission prompt rather than running
 unattended.
+
+### REQ-049 — Profile social links
+An authenticated user may set up to four optional external profile links
+on their account: a personal website URL, a GitHub profile URL, a
+Twitter/X profile URL, and an Instagram profile URL. Each link is stored
+as a nullable string. The account settings page provides a dedicated input
+field for each; a field submitted with a blank value clears the
+corresponding stored link, and a field omitted from the submission leaves
+the corresponding link unchanged — consistent with the partial-update
+semantics of REQ-011.
+
+A user's public profile page displays any links that are set, each rendered
+as a clickable anchor pointing to the provided URL. If no links are set,
+the profile renders exactly as it does today, with no empty placeholders.

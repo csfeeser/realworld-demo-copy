@@ -404,6 +404,23 @@ changed.
   use of the server in a session requires an interactive permission
   prompt.
 
+### US-029 — Profile social links
+*(REQ-049)*
+
+- **AC-080** — Given an authenticated user's settings form, when a non-empty
+  URL is submitted for any of the website, github, twitter, or instagram
+  fields, then that URL is stored on the account and returned in subsequent
+  profile and account responses.
+- **AC-081** — Given an authenticated user who has one or more social links
+  stored, when the settings form is submitted with those fields left blank,
+  then the corresponding links are cleared on the account.
+- **AC-082** — Given a user's public profile page, when one or more social
+  links are set on that account, then each link is rendered as a clickable
+  anchor pointing to the stored URL.
+- **AC-083** — Given a user's public profile page, when no social links are
+  set on that account, then the profile renders with no link placeholders or
+  empty elements for those fields.
+
 ---
 
 ## Traceability Matrix
@@ -458,3 +475,4 @@ changed.
 | REQ-046 | US-027 | AC-074, AC-075 |
 | REQ-047 | US-028 | AC-076, AC-077 |
 | REQ-048 | US-028 | AC-078, AC-079 |
+| REQ-049 | US-029 | AC-080–AC-083 |
