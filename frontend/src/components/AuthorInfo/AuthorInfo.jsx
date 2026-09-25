@@ -39,10 +39,30 @@ function AuthorInfo() {
 
       {(website || github || twitter || instagram) && (
         <div className="social-links">
-          {website && <a href={website} target="_blank" rel="noreferrer">{website}</a>}
-          {github && <a href={github} target="_blank" rel="noreferrer">GitHub</a>}
-          {twitter && <a href={twitter} target="_blank" rel="noreferrer">Twitter/X</a>}
-          {instagram && <a href={instagram} target="_blank" rel="noreferrer">Instagram</a>}
+          {website && (
+            <a className="social-link" href={website} target="_blank" rel="noreferrer">
+              <img src="/icons/globe.svg" alt="" className="social-icon" />
+              {website}
+            </a>
+          )}
+          {github && (
+            <a className="social-link" href={github} target="_blank" rel="noreferrer">
+              <img src="/icons/github.svg" alt="" className="social-icon" />
+              GitHub
+            </a>
+          )}
+          {twitter && (
+            <a className="social-link" href={twitter} target="_blank" rel="noreferrer">
+              <img src="/icons/x.svg" alt="" className="social-icon" />
+              Twitter/X
+            </a>
+          )}
+          {instagram && (
+            <a className="social-link" href={instagram} target="_blank" rel="noreferrer">
+              <img src="/icons/instagram.svg" alt="" className="social-icon" />
+              Instagram
+            </a>
+          )}
         </div>
       )}
 
