@@ -404,6 +404,23 @@ changed.
   use of the server in a session requires an interactive permission
   prompt.
 
+### US-029 — Article cover image
+*(REQ-049)*
+
+- **AC-080** — Given a `POST /api/articles` request whose body includes a
+  non-empty `coverImage` URL, when the article is created, then
+  `Article.create` is called with that `coverImage` value and the stored
+  article includes it.
+- **AC-081** — Given a `POST /api/articles` request whose body omits
+  `coverImage`, when the article is created, then `Article.create` is
+  called without a `coverImage` key and no cover image is stored.
+- **AC-082** — Given a `PUT /api/articles/:slug` request whose body includes
+  a `coverImage` value, when the article is updated, then
+  `article.coverImage` is set to that value and saved.
+- **AC-083** — Given a `PUT /api/articles/:slug` request whose body omits
+  `coverImage`, when the article is updated, then `article.coverImage`
+  retains its previous value.
+
 ---
 
 ## Traceability Matrix
@@ -458,3 +475,4 @@ changed.
 | REQ-046 | US-027 | AC-074, AC-075 |
 | REQ-047 | US-028 | AC-076, AC-077 |
 | REQ-048 | US-028 | AC-078, AC-079 |
+| REQ-049 | US-029 | AC-080–AC-083 |
