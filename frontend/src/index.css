@@ -39,3 +39,23 @@ button:focus {
   background-color: #2e7d32;
 }
 
+/* Profile social links (Issue #17). Plain wrapping list of links rather than
+   Conduit tag pills, which don't wrap and read poorly for arbitrary labels. */
+.social-links {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem 1rem;
+}
+
+.social-links a {
+  /* #2e7d32 on white is ~5.1:1 (WCAG AA); the Conduit link green (#5cb85c)
+     is too light for body-size text. */
+  color: #2e7d32;
+  text-decoration: underline;
+  overflow-wrap: anywhere;
+}
+

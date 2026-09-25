@@ -5,6 +5,7 @@ import { useAuth } from "../../context/AuthContext";
 import getProfile from "../../services/getProfile";
 import Avatar from "../Avatar";
 import FollowButton from "../FollowButton";
+import ProfileLinks from "../ProfileLinks";
 import ProfileStats from "../ProfileStats";
 
 function AuthorInfo() {
@@ -39,6 +40,8 @@ function AuthorInfo() {
       {bio && <Markdown options={{ forceBlock: true }}>{bio}</Markdown>}
 
       <ProfileStats headers={headers} username={username} />
+
+      <ProfileLinks headers={headers} username={username} />
 
       {username === loggedUser.username ? (
         <Link

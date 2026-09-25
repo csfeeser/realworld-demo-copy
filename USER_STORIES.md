@@ -150,3 +150,7 @@ favorites received, and member-since date on their profile, so that I can
 gauge who they are and how established they are on the platform before
 reading their work.
 *Related requirements: REQ-049*
+
+**US-030** — As a user, I want to list links to my other online presences on
+my profile, so that readers who like my writing can find me elsewhere.
+*Related requirements: REQ-050*

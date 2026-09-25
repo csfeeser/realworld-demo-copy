@@ -56,6 +56,7 @@ module.exports = (sequelize, DataTypes) => {
       bio: DataTypes.TEXT,
       image: DataTypes.TEXT,
       password: DataTypes.STRING,
+      socialLinks: { type: DataTypes.JSON, defaultValue: null }, // [{ label, url }]
     },
     {
       sequelize,

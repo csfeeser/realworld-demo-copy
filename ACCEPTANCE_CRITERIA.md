@@ -423,6 +423,33 @@ changed.
   profile is loaded again, then the displayed article count reflects the
   change.
 
+### US-030 — Social links on the profile page
+*(REQ-050)*
+
+- **AC-085** — Given a user on the account settings page, when they add one
+  or more social links (each a label and a URL) and save, then those links
+  are stored on their account.
+- **AC-086** — Given an author who has set social links, when their profile
+  is viewed, then each link is displayed pointing to the URL provided.
+- **AC-087** — Given an author who has set no social links, when their
+  profile is viewed, then no links section is displayed and the profile
+  appears as it did before any links were added.
+- **AC-088** — Given an anonymous (unauthenticated) visitor, when they view
+  an author's profile, then any social links the author has set are present.
+- **AC-089** — Given a user updating their profile, when the update includes
+  a social-links list it replaces the stored list in full, when it includes
+  an empty list all links are cleared, and when it omits the links the stored
+  list is left unchanged.
+- **AC-090** — Given a social-link row left with neither a label nor a URL,
+  when the settings update is saved, then that blank row is discarded rather
+  than stored.
+- **AC-091** — (REQ-051) Given a social link entered without a URL, when the
+  user saves their settings, then the settings are not saved and a validation
+  message is shown.
+- **AC-092** — (REQ-051) Given a social link entered without a label, or with
+  a label longer than 50 characters, when the user saves their settings, then
+  the settings are not saved.
+
 ---
 
 ## Traceability Matrix
@@ -478,3 +505,5 @@ changed.
 | REQ-047 | US-028 | AC-076, AC-077 |
 | REQ-048 | US-028 | AC-078, AC-079 |
 | REQ-049 | US-029 | AC-080–AC-084 |
+| REQ-050 | US-030 | AC-085–AC-090 |
+| REQ-051 | US-030 | AC-091, AC-092 |
