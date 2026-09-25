@@ -404,6 +404,22 @@ changed.
   use of the server in a session requires an interactive permission
   prompt.
 
+### US-029 — Estimated article reading time
+*(REQ-049)*
+
+- **AC-080** — Given an article body of a known word count, when the
+  reading time is computed, then it renders as "N min read" rounded up to
+  the next whole minute at 200 words per minute (e.g., 201 words renders
+  "2 min read"). *(Verified by `frontend/src/helpers/readingTime.test.js`.)*
+- **AC-081** — Given an empty, missing, or very short article body, when
+  the reading time is computed, then it renders as "1 min read" rather
+  than "0 min read", a blank value, or `NaN`. *(Verified by
+  `frontend/src/helpers/readingTime.test.js`.)*
+- **AC-082** — Given an article preview card or the article detail page,
+  when the article's date (REQ-040) is displayed, then the reading-time
+  estimate is shown immediately alongside it, in a separate element that
+  does not alter the date's own format or position.
+
 ---
 
 ## Traceability Matrix
@@ -458,3 +474,4 @@ changed.
 | REQ-046 | US-027 | AC-074, AC-075 |
 | REQ-047 | US-028 | AC-076, AC-077 |
 | REQ-048 | US-028 | AC-078, AC-079 |
+| REQ-049 | US-029 | AC-080–AC-082 |
