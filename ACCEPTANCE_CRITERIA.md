@@ -420,6 +420,14 @@ changed.
 - **AC-083** — Given a user's public profile page, when no social links are
   set on that account, then the profile renders with no link placeholders or
   empty elements for those fields.
+- **AC-084** — Given a user's public profile page, when one or more social
+  links are set on that account, then each link is displayed on its own
+  separate line (not concatenated inline with other links).
+- **AC-085** — Given a user's public profile page, when one or more social
+  links are set on that account, then each link is preceded by a
+  service-specific icon that identifies the platform (a globe icon for a
+  personal website, the GitHub mark for a GitHub URL, the Twitter/X bird for
+  Twitter/X, and an Instagram camera icon for Instagram).
 
 ---
 
