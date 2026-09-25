@@ -406,6 +406,24 @@ changed.
 
 ---
 
+### US-029 — Light/dark theme toggle
+*(REQ-049)*
+
+- **AC-080** — Given no stored theme preference and no OS dark-mode
+  preference, when the app loads, then it renders in the light theme.
+- **AC-081** — Given no stored theme preference and an OS dark-mode
+  preference, when the app loads, then it renders in the dark theme.
+- **AC-082** — Given a previously stored theme preference, when the app
+  loads, then the stored preference is used regardless of the current OS
+  preference.
+- **AC-083** — Given the app rendered in either theme, when the visitor
+  clicks the theme toggle control, then the active theme switches
+  immediately, without a page reload.
+- **AC-084** — Given a visitor has toggled the theme, when the page is
+  later reloaded or revisited, then the toggled theme is restored.
+
+---
+
 ## Traceability Matrix
 
 | Requirement | User Story | Acceptance Criteria |
@@ -458,3 +476,4 @@ changed.
 | REQ-046 | US-027 | AC-074, AC-075 |
 | REQ-047 | US-028 | AC-076, AC-077 |
 | REQ-048 | US-028 | AC-078, AC-079 |
+| REQ-049 | US-029 | AC-080–AC-084 |

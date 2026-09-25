@@ -7,9 +7,9 @@
 */
 
 /*
-  Theme tokens (light defaults match today's literal values exactly, so
-  this block alone changes nothing visually). Dark overrides live in the
-  `:root[data-theme="dark"]` block near the end of this file.
+  Theme tokens. Light defaults (bare :root) match today's literal values
+  exactly. Dark values apply when ThemeContext sets data-theme="dark" on
+  <html> (see frontend/src/context/ThemeContext.jsx).
 */
 :root {
   --color-bg: #fff;
@@ -26,6 +26,30 @@
   --color-form-disabled-bg: #eceeef;
   --color-danger-action: #d00;
   --color-muted-action: #777;
+  --color-sidebar-bg: #f3f3f3;
+  --color-navbar-link: rgba(0, 0, 0, 0.3);
+  --color-navbar-link-hover: rgba(0, 0, 0, 0.6);
+  --color-navbar-link-active: rgba(0, 0, 0, 0.8);
+}
+
+:root[data-theme="dark"] {
+  --color-bg: #1a1a1a;
+  --color-text: #e8e8e8;
+  --color-border: #444;
+  --color-card-shadow: rgba(255, 255, 255, 0.125);
+  --color-article-card-border: #3a3a3a;
+  --color-banner-bg: #2a2a2a;
+  --color-footer-bg: #2a2a2a;
+  --color-alert-bg: #4a4426;
+  --color-form-text: #e8e8e8;
+  --color-form-placeholder: #888;
+  --color-form-disabled-bg: #333;
+  --color-danger-action: #ff6b6b;
+  --color-muted-action: #aaa;
+  --color-sidebar-bg: #2a2a2a;
+  --color-navbar-link: rgba(255, 255, 255, 0.5);
+  --color-navbar-link-hover: rgba(255, 255, 255, 0.75);
+  --color-navbar-link-active: #fff;
 }
 
 .logo-font {
@@ -3132,9 +3156,9 @@ input[type="button"].btn-block {
     color: rgba(0, 0, 0, 0.8); }
 
 .navbar-light .navbar-nav .nav-link {
-  color: rgba(0, 0, 0, 0.3); }
+  color: var(--color-navbar-link, rgba(0, 0, 0, 0.3)); }
   .navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
-    color: rgba(0, 0, 0, 0.6); }
+    color: var(--color-navbar-link-hover, rgba(0, 0, 0, 0.6)); }
 
 .navbar-light .navbar-nav .open > .nav-link, .navbar-light .navbar-nav .open > .nav-link:focus, .navbar-light .navbar-nav .open > .nav-link:hover,
 .navbar-light .navbar-nav .active > .nav-link,
@@ -3146,7 +3170,7 @@ input[type="button"].btn-block {
 .navbar-light .navbar-nav .nav-link.active,
 .navbar-light .navbar-nav .nav-link.active:focus,
 .navbar-light .navbar-nav .nav-link.active:hover {
-  color: rgba(0, 0, 0, 0.8); }
+  color: var(--color-navbar-link-active, rgba(0, 0, 0, 0.8)); }
 
 .navbar-light .navbar-divider {
   background-color: rgba(0, 0, 0, 0.075); }
@@ -5248,7 +5272,7 @@ footer {
 
 .home-page .sidebar {
   padding: 5px 10px 10px 10px;
-  background: #f3f3f3;
+  background: var(--color-sidebar-bg, #f3f3f3);
   border-radius: 4px; }
   .home-page .sidebar p {
     margin-bottom: 0.2rem; }
