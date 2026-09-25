@@ -424,3 +424,15 @@ stored, it reflects a newly edited body immediately, without requiring any
 separate update step.
 
 *(Directly verified by `frontend/src/helpers/readingTime.test.js`.)*
+
+---
+
+### REQ-050 — Public, paginated user directory
+A list of all user accounts is available without authentication —
+extending REQ-001's anonymous-access pattern to profiles — returned as a
+page of profile representations (REQ-028), ordered alphabetically by
+username. Listing supports a page size (`limit`, default 12) and a page
+index (`offset`, default 0), mirroring the pagination convention used for
+article listing (REQ-013).
+
+*(Directly verified by `backend/controllers/profiles.test.js`.)*

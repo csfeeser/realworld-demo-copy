@@ -420,6 +420,23 @@ changed.
   estimate is shown immediately alongside it, in a separate element that
   does not alter the date's own format or position.
 
+### US-030 — Browsable user directory
+*(REQ-050)*
+
+- **AC-083** — Given no `limit`/`offset` query params, when the user
+  directory is requested, then up to 12 profiles are returned, ordered
+  alphabetically by username, alongside the true total count. *(Verified
+  by `backend/controllers/profiles.test.js`.)*
+- **AC-084** — Given custom `limit`/`offset` query params, when the user
+  directory is requested, then that specific page of results is returned.
+  *(Verified by `backend/controllers/profiles.test.js`.)*
+- **AC-085** — Given no `Authorization` header, when the user directory
+  is requested, then every returned profile's `following` flag is `false`
+  while its `followersCount` still reflects the true total (REQ-028).
+  *(Verified by `backend/controllers/profiles.test.js`.)*
+- **AC-086** — Given an entry in the user directory, when it is displayed,
+  then it links to that user's full profile page.
+
 ---
 
 ## Traceability Matrix
@@ -475,3 +492,4 @@ changed.
 | REQ-047 | US-028 | AC-076, AC-077 |
 | REQ-048 | US-028 | AC-078, AC-079 |
 | REQ-049 | US-029 | AC-080–AC-082 |
+| REQ-050 | US-030 | AC-083–AC-086 |
