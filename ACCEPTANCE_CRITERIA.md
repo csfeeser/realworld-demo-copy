@@ -429,6 +429,21 @@ changed.
   personal website, the GitHub mark for a GitHub URL, the Twitter/X bird for
   Twitter/X, and an Instagram camera icon for Instagram).
 
+### US-030 — Social link URL protocol validation
+*(REQ-050)*
+
+- **AC-086** — Given a settings form submission containing a social link
+  value whose URL scheme is neither `http` nor `https` (for example
+  `javascript:alert(1)` or `ftp://example.com`), when the server processes
+  the request, then it responds with HTTP 422 and the value is not stored.
+- **AC-087** — Given a settings form submission containing a social link
+  value that is an empty string, when the server processes the request,
+  then it is accepted and the stored link is cleared (empty string is not
+  subject to the protocol check).
+- **AC-088** — Given a user's public profile page, when a stored social link
+  value does not parse as an `http` or `https` URL, then that link is not
+  rendered as a clickable anchor (it is suppressed entirely).
+
 ---
 
 ## Traceability Matrix
@@ -484,3 +499,4 @@ changed.
 | REQ-047 | US-028 | AC-076, AC-077 |
 | REQ-048 | US-028 | AC-078, AC-079 |
 | REQ-049 | US-029 | AC-080–AC-083 |
+| REQ-050 | US-030 | AC-086–AC-088 |

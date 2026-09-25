@@ -149,3 +149,10 @@ blocked at the database level, not just by the tool's own claims.
 (personal website, GitHub, Twitter/X, Instagram) on my profile, so that
 readers who like my writing can find me elsewhere.
 *Related requirements: REQ-049*
+
+---
+
+**US-030** — As a visitor viewing a user's profile, I want to be protected
+from malicious links, so that clicking a social link can never execute
+script in my browser.
+*Related requirements: REQ-050*

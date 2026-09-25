@@ -419,3 +419,14 @@ semantics of REQ-011.
 A user's public profile page displays any links that are set, each rendered
 as a clickable anchor pointing to the provided URL. If no links are set,
 the profile renders exactly as it does today, with no empty placeholders.
+
+### REQ-050 — Social link URL protocol validation
+Each social link value submitted via the account settings form must use
+either the `http` or `https` URL scheme. The server rejects any submitted
+value whose parsed URL protocol is not `http:` or `https:`, returning a
+422 Unprocessable Entity response before the value is stored. An empty
+string (which clears a link) is always accepted. On the public profile
+page, any stored link whose value does not parse as an `http` or `https`
+URL is silently suppressed rather than rendered as a clickable anchor, so
+that a value entered via a path that bypassed server validation can never
+execute script in a visitor's browser.
