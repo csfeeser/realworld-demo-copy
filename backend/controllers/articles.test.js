@@ -124,6 +124,50 @@ describe("createArticle", () => {
     expect(Article.create).not.toHaveBeenCalled();
   });
 
+  // AC-080: coverImage is forwarded to Article.create when provided.
+  test("coverImage provided -> included in Article.create call", async () => {
+    Article.findOne.mockResolvedValue(null);
+    const created = makeArticle({ author: loggedUser });
+    Article.create.mockResolvedValue(created);
+
+    await createArticle(
+      {
+        loggedUser,
+        body: {
+          article: {
+            title: "T",
+            description: "d",
+            body: "b",
+            tagList: [],
+            coverImage: "https://example.com/cover.jpg",
+          },
+        },
+      },
+      makeRes(),
+      vi.fn(),
+    );
+
+    expect(Article.create).toHaveBeenCalledWith(
+      expect.objectContaining({ coverImage: "https://example.com/cover.jpg" }),
+    );
+  });
+
+  // AC-081: coverImage is omitted from Article.create when not supplied.
+  test("coverImage omitted -> not passed to Article.create", async () => {
+    Article.findOne.mockResolvedValue(null);
+    const created = makeArticle({ author: loggedUser });
+    Article.create.mockResolvedValue(created);
+
+    await createArticle(
+      { loggedUser, body: { article: { title: "T", description: "d", body: "b", tagList: [] } } },
+      makeRes(),
+      vi.fn(),
+    );
+
+    const createArg = Article.create.mock.calls[0][0];
+    expect(createArg).not.toHaveProperty("coverImage");
+  });
+
   // AC-021: an already-existing tag is attached regardless of length; a
   // brand-new tag is only created if its *untrimmed* string is longer than
   // 2 characters, even though the stored name is trimmed - so "  ab" (4
@@ -218,6 +262,41 @@ describe("updateArticle", () => {
     expect(article.slug).toBe("brand-new-title");
     expect(article.save).toHaveBeenCalled();
     expect(Article.findOne).toHaveBeenCalledTimes(1);
+  });
+
+  // AC-082: coverImage is updated on the article when provided.
+  test("coverImage provided -> article.coverImage is updated", async () => {
+    const author = makeFollowableUser();
+    const article = makeArticle({ author, coverImage: "https://example.com/old.jpg" });
+    Article.findOne.mockResolvedValue(article);
+
+    await updateArticle(
+      {
+        loggedUser: author,
+        params: { slug: "a-slug" },
+        body: { article: { coverImage: "https://example.com/new.jpg" } },
+      },
+      makeRes(),
+      vi.fn(),
+    );
+
+    expect(article.coverImage).toBe("https://example.com/new.jpg");
+    expect(article.save).toHaveBeenCalled();
+  });
+
+  // AC-083: coverImage is left unchanged when not included in the update payload.
+  test("coverImage absent from payload -> article.coverImage unchanged", async () => {
+    const author = makeFollowableUser();
+    const article = makeArticle({ author, coverImage: "https://example.com/existing.jpg" });
+    Article.findOne.mockResolvedValue(article);
+
+    await updateArticle(
+      { loggedUser: author, params: { slug: "a-slug" }, body: { article: { title: "New Title" } } },
+      makeRes(),
+      vi.fn(),
+    );
+
+    expect(article.coverImage).toBe("https://example.com/existing.jpg");
   });
 
   // AC-023: a falsy description/body on update leaves the existing value

@@ -405,3 +405,12 @@ tools are not added to any auto-approval allowlist in
 `.claude/settings.json`, so the first use of the server in a session
 requires the normal Claude Code permission prompt rather than running
 unattended.
+
+### REQ-049 — Article cover image
+An article may optionally carry a cover image URL. Authors may supply a URL
+when creating or updating an article via the editor form; if no URL is
+provided, the field is absent from the created article. The backend stores
+the URL in the `coverImage` column of the Articles table (nullable STRING)
+and includes it in all article API responses. The frontend displays the
+cover image — when present — above the article body on the article detail
+page and above the title on preview cards in article lists.
