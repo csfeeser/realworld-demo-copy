@@ -1,6 +1,29 @@
 const { UnauthorizedError, NotFoundError } = require("../helper/customErrors");
-const { appendFollowers } = require("../helper/helpers");
+const { appendFollowers, createNotification } = require("../helper/helpers");
 const { User } = require("../models");
+
+//? All Profiles - paginated user directory
+const allProfiles = async (req, res, next) => {
+  try {
+    const { loggedUser } = req;
+    const { limit = 12, offset = 0 } = req.query;
+
+    const profiles = await User.findAndCountAll({
+      attributes: { exclude: "email" },
+      limit: parseInt(limit),
+      offset: offset * limit,
+      order: [["username", "ASC"]],
+    });
+
+    for (let profile of profiles.rows) {
+      await appendFollowers(loggedUser, profile);
+    }
+
+    res.json({ profiles: profiles.rows, profilesCount: profiles.count });
+  } catch (error) {
+    next(error);
+  }
+};
 
 //? Profile
 const getProfile = async (req, res, next) => {
@@ -38,6 +61,11 @@ const followToggler = async (req, res, next) => {
 
     if (req.method === "POST") {
       await profile.addFollower(loggedUser);
+      await createNotification({
+        type: "follow",
+        recipientId: profile.id,
+        actorId: loggedUser.id,
+      });
     } else if (req.method === "DELETE") {
       await profile.removeFollower(loggedUser);
     }
@@ -50,4 +78,4 @@ const followToggler = async (req, res, next) => {
   }
 };
 
-module.exports = { getProfile, followToggler };
+module.exports = { allProfiles, getProfile, followToggler };

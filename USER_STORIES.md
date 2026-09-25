@@ -148,3 +148,17 @@ blocked at the database level, not just by the tool's own claims.
 **US-029** — As a reader, I want to see roughly how long an article will
 take to read, so that I can decide whether to read it now.
 *Related requirements: REQ-049*
+
+---
+
+**US-030** — As a user, I want to browse a directory of all authors, so
+that I can discover new people to follow without already knowing their
+username.
+*Related requirements: REQ-050*
+
+---
+
+**US-031** — As a user, I want to see notifications for new followers,
+comments, and favorites on my content, so that I know when someone has
+engaged with me without having to check manually.
+*Related requirements: REQ-051, REQ-052*
