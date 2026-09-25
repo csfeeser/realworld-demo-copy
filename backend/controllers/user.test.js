@@ -58,6 +58,21 @@ describe("updateUser", () => {
     expect(loggedUser.save).toHaveBeenCalled();
   });
 
+  // AC-080: when no password key is present in the update body, the stored
+  // hash is left unchanged (no re-hash, no 500 from bcrypt receiving undefined).
+  test("omitting the password key leaves the stored hash unchanged", async () => {
+    const loggedUser = makeInstance(
+      { username: "jane", password: "original-hash" },
+      { save: vi.fn().mockResolvedValue() },
+    );
+    const req = { loggedUser, body: { user: { username: "jane" } } };
+
+    await updateUser(req, makeRes(), vi.fn());
+
+    expect(loggedUser.password).toBe("original-hash");
+    expect(loggedUser.save).toHaveBeenCalled();
+  });
+
   // AC-018: there is no submitted password value that leaves the stored
   // hash unchanged - even an empty string is hashed and saved.
   test("password field is always re-hashed and saved, even as an empty string", async () => {

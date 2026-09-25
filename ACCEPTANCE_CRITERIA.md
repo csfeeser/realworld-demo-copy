@@ -404,6 +404,19 @@ changed.
   use of the server in a session requires an interactive permission
   prompt.
 
+### US-029 — Correct password update behavior
+*(REQ-049)*
+
+- **AC-080** — Given an authenticated `PUT /api/user` request whose body
+  does not include a `password` key (or includes it as `undefined`), when
+  the request is processed, then the stored password hash is left
+  unchanged and the response is a successful `200` with the updated user
+  data — not a `500` error.
+- **AC-081** — Given an authenticated `PUT /api/user` request whose body
+  includes `password` with any defined value (including an empty string),
+  when the request is processed, then the stored password hash is
+  overwritten with the hash of the submitted value.
+
 ---
 
 ## Traceability Matrix
@@ -458,3 +471,4 @@ changed.
 | REQ-046 | US-027 | AC-074, AC-075 |
 | REQ-047 | US-028 | AC-076, AC-077 |
 | REQ-048 | US-028 | AC-078, AC-079 |
+| REQ-049 | US-029 | AC-080, AC-081 |
