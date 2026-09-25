@@ -21,12 +21,15 @@ function ArticleAuthorButtons({ body, description, slug, tagList, title }) {
     <>
       <button
         className="btn btn-sm"
-        style={{ color: "#d00" }}
+        style={{ color: "var(--color-danger-action, #d00)" }}
         onClick={handleClick}
       >
         <i className="ion-trash-a"></i> Delete Article
       </button>{" "}
-      <button className="btn btn-sm" style={{ color: "#777" }}>
+      <button
+        className="btn btn-sm"
+        style={{ color: "var(--color-muted-action, #777)" }}
+      >
         <Link
           className="nav-link"
           state={{ body, description, tagList, title }}

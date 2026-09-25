@@ -5,6 +5,29 @@
   More info on how to modify the Conduit SASS styles can be found at
   https://github.com/GoThinkster/conduit-sass
 */
+
+/*
+  Theme tokens (light defaults match today's literal values exactly, so
+  this block alone changes nothing visually). Dark overrides live in the
+  `:root[data-theme="dark"]` block near the end of this file.
+*/
+:root {
+  --color-bg: #fff;
+  --color-text: #373a3c;
+  --color-border: #ddd;
+  --color-card-shadow: rgba(0, 0, 0, 0.125);
+  --color-article-card-border: #e5e5e5;
+  --color-banner-bg: #333;
+  --color-banner-text: #fff;
+  --color-footer-bg: #f3f3f3;
+  --color-alert-bg: #fcf8e3;
+  --color-form-text: #55595c;
+  --color-form-placeholder: #999;
+  --color-form-disabled-bg: #eceeef;
+  --color-danger-action: #d00;
+  --color-muted-action: #777;
+}
+
 .logo-font {
   font-family: "Titillium Web", sans-serif; }
 
@@ -262,8 +285,8 @@ body {
   font-family: "Source Sans Pro", sans-serif;
   font-size: 1rem;
   line-height: 1.5;
-  color: #373a3c;
-  background-color: #fff; }
+  color: var(--color-text, #373a3c);
+  background-color: var(--color-bg, #fff); }
 
 [tabindex="-1"]:focus {
   outline: none !important; }
@@ -467,7 +490,7 @@ small,
 mark,
 .mark {
   padding: 0.2em;
-  background-color: #fcf8e3; }
+  background-color: var(--color-alert-bg, #fcf8e3); }
 
 .list-unstyled {
   padding-left: 0;
@@ -523,8 +546,8 @@ mark,
 
 .img-thumbnail {
   padding: 0.25rem;
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: var(--color-bg, #fff);
+  border: 1px solid var(--color-border, #ddd);
   border-radius: 0.25rem;
   transition: all .2s ease-in-out;
   display: inline-block;
@@ -1663,8 +1686,8 @@ pre {
   padding: 0.5rem 0.75rem;
   font-size: 1rem;
   line-height: 1.25;
-  color: #55595c;
-  background-color: #fff;
+  color: var(--color-form-text, #55595c);
+  background-color: var(--color-bg, #fff);
   background-image: none;
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -1676,10 +1699,10 @@ pre {
     border-color: #66afe9;
     outline: none; }
   .form-control::placeholder {
-    color: #999;
+    color: var(--color-form-placeholder, #999);
     opacity: 1; }
   .form-control:disabled, .form-control[readonly] {
-    background-color: #eceeef;
+    background-color: var(--color-form-disabled-bg, #eceeef);
     opacity: 1; }
   .form-control:disabled {
     cursor: not-allowed; }
@@ -3157,9 +3180,9 @@ input[type="button"].btn-block {
   position: relative;
   display: block;
   margin-bottom: 0.75rem;
-  background-color: #fff;
+  background-color: var(--color-bg, #fff);
   border-radius: 0.25rem;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.125); }
+  box-shadow: inset 0 0 0 1px var(--color-card-shadow, rgba(0, 0, 0, 0.125)); }
 
 .card-block {
   padding: 1.25rem; }
@@ -5110,7 +5133,7 @@ ul.tag-list {
     color: #5CB85C !important; }
 
 footer {
-  background: #f3f3f3;
+  background: var(--color-footer-bg, #f3f3f3);
   margin-top: 3rem;
   padding: 1rem 0;
   position: absolute;
@@ -5130,8 +5153,8 @@ footer {
   font-weight: bold; }
 
 .banner {
-  color: #fff;
-  background: #333;
+  color: var(--color-banner-text, #fff);
+  background: var(--color-banner-bg, #333);
   padding: 2rem;
   margin-bottom: 2rem; }
   .banner h1 {
@@ -5276,10 +5299,10 @@ footer {
   width: 30px; }
 
 .article-page .card {
-  border: 1px solid #e5e5e5;
+  border: 1px solid var(--color-article-card-border, #e5e5e5);
   box-shadow: none !important; }
   .article-page .card .card-footer {
-    border-top: 1px solid #e5e5e5;
+    border-top: 1px solid var(--color-article-card-border, #e5e5e5);
     box-shadow: none !important;
     font-size: 0.8rem;
     font-weight: 300; }
