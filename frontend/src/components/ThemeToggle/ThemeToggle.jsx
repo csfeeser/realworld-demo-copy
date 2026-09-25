@@ -12,7 +12,11 @@ function ThemeToggle() {
           theme === "dark" ? "Switch to light theme" : "Switch to dark theme"
         }
       >
-        <i className={theme === "dark" ? "ion-ios-sunny" : "ion-ios-moon"}></i>
+        <i
+          className={`theme-toggle-icon ${
+            theme === "dark" ? "ion-ios-sunny" : "ion-ios-moon"
+          }`}
+        ></i>
       </button>
     </li>
   );

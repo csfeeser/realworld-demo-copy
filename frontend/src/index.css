@@ -26,3 +26,8 @@ button:focus {
   justify-content: center;
   flex-direction: column;
 }
+
+.theme-toggle-icon {
+  font-size: 1.5rem;
+  vertical-align: middle;
+}

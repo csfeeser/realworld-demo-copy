@@ -3457,8 +3457,8 @@ input[type="button"].btn-block {
     color: #818a91;
     pointer-events: none;
     cursor: not-allowed;
-    background-color: #fff;
-    border-color: #ddd; }
+    background-color: var(--color-bg, #fff);
+    border-color: var(--color-border, #ddd); }
 
 .page-link {
   position: relative;
@@ -3467,12 +3467,12 @@ input[type="button"].btn-block {
   margin-left: -1px;
   color: #5CB85C;
   text-decoration: none;
-  background-color: #fff;
-  border: 1px solid #ddd; }
+  background-color: var(--color-bg, #fff);
+  border: 1px solid var(--color-border, #ddd); }
   .page-link:focus, .page-link:hover {
     color: #3d8b3d;
-    background-color: #eceeef;
-    border-color: #ddd; }
+    background-color: var(--color-form-disabled-bg, #eceeef);
+    border-color: var(--color-border, #ddd); }
 
 .pagination-lg .page-link {
   padding: 0.75rem 1.5rem;
@@ -5152,7 +5152,6 @@ ul.tag-list {
   .nav-pills.outline-active .nav-link:hover {
     color: #555; }
   .nav-pills.outline-active .nav-link.active {
-    background: #fff !important;
     border-bottom: 2px solid #5CB85C !important;
     color: #5CB85C !important; }
 
