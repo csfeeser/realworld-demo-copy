@@ -416,6 +416,14 @@ changed.
   includes `password` with any defined value (including an empty string),
   when the request is processed, then the stored password hash is
   overwritten with the hash of the submitted value.
+- **AC-082** — **Correction to AC-081 (empty-string case):** Given an
+  authenticated `PUT /api/user` request whose body includes
+  `password: ""` (empty string), when the request is processed, then the
+  stored password hash is left unchanged and the response is a successful
+  `200`. An empty string is treated identically to an omitted field (per
+  AC-080). Only a non-empty `password` value causes re-hashing. (AC-081
+  described the pre-fix tautology behaviour for this case; this entry
+  supersedes it.)
 
 ---
 

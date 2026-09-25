@@ -73,9 +73,10 @@ describe("updateUser", () => {
     expect(loggedUser.save).toHaveBeenCalled();
   });
 
-  // AC-018: there is no submitted password value that leaves the stored
-  // hash unchanged - even an empty string is hashed and saved.
-  test("password field is always re-hashed and saved, even as an empty string", async () => {
+  // AC-082: an empty-string password is treated as "no change" — the
+  // stored hash is left unchanged. (Supersedes the empty-string case in
+  // AC-018, which described the pre-fix tautology's behaviour.)
+  test("empty-string password leaves the stored hash unchanged", async () => {
     const loggedUser = makeInstance(
       { username: "jane", password: "original-hash" },
       { save: vi.fn().mockResolvedValue() },
@@ -84,7 +85,22 @@ describe("updateUser", () => {
 
     await updateUser(req, makeRes(), vi.fn());
 
+    expect(loggedUser.password).toBe("original-hash");
+    expect(loggedUser.save).toHaveBeenCalled();
+  });
+
+  // AC-018 (non-empty password case): a non-empty password string is
+  // always re-hashed and saved.
+  test("non-empty password field is re-hashed and saved", async () => {
+    const loggedUser = makeInstance(
+      { username: "jane", password: "original-hash" },
+      { save: vi.fn().mockResolvedValue() },
+    );
+    const req = { loggedUser, body: { user: { username: "jane", password: "newpass" } } };
+
+    await updateUser(req, makeRes(), vi.fn());
+
     expect(loggedUser.password).not.toBe("original-hash");
-    await expect(bcryptCompare("", loggedUser.password)).resolves.toBe(true);
+    await expect(bcryptCompare("newpass", loggedUser.password)).resolves.toBe(true);
   });
 });

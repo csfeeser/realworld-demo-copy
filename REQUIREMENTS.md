@@ -429,3 +429,18 @@ The correct condition is `if (password !== undefined)`. Submitted values
 of `""` or any non-empty string are still hashed and saved (preserving
 the behavior described in REQ-011's special case for the empty-string
 scenario).
+
+### REQ-050 — Correction to REQ-049: empty-string password is also treated as "no change"
+**Correction to REQ-049 — replaces the condition stated there.**
+
+The condition implemented is `if (password !== undefined && password !== "")`,
+not just `if (password !== undefined)`. Both a missing `password` key
+(resolves to `undefined`) and an explicit `password: ""` leave the
+stored hash unchanged.
+
+This matters because the settings form always sends `password: ""` when
+the user has not typed a new password (the stored hash is stripped by the
+model's `toJSON()` before reaching the client). Without the `&&`
+condition, every settings save without a new password would re-hash an
+empty string and silently replace the user's real password — breaking
+their next login.
