@@ -26,7 +26,7 @@
     "@ahmetkca/mcp-server-postgres": "1.2.0",
     "@vitejs/plugin-react-swc": "^3.2.0",
     "concurrently": "^7.6.0",
-    "jsdom": "^30.0.1",
+    "jsdom": "^21.1.2",
     "vitest": "^0.29.7"
   }
 }
