@@ -68,6 +68,11 @@ readable copy of the same content, grouped with the shared context above.
 
 **Size:** M · **Area:** Frontend
 
+**Status:** Active — scoped into `REQ-049`–`REQ-051` / `US-029` /
+`AC-080`–`AC-085` (see "Proposed approach" below for the scoping
+decisions those entries capture). Not yet built — no code exists for it
+yet; this is the next ticket up for implementation.
+
 ### Summary
 
 Add a dark color theme the user can switch to, in addition to the
@@ -95,13 +100,42 @@ can read comfortably in low light and according to my own preference.
 - Purely additive: the current (light) look must remain available and
   pixel-equivalent to today when the dark theme is not selected.
 
+### Proposed approach
+
+- A theme toggle control is added to the navbar, present on every page
+  regardless of authentication state.
+- The active theme (light or dark) is remembered per browser, independent
+  of any user account — it persists across reloads and future visits on
+  that browser whether or not the visitor is logged in.
+- Before a visitor has ever used the toggle, the site follows their OS/
+  browser color-scheme preference. Once they use the toggle, that explicit
+  choice takes precedence from then on, even if the OS/browser preference
+  later changes.
+- The dark theme is layered on top of the existing appearance rather than
+  replacing it: with dark mode off, every page renders exactly as it does
+  today; with it on, colors change to a dark-appropriate set without
+  altering layout, spacing, or markup structure.
+- Every existing page and component is checked under the dark theme for
+  legible text and visible borders/icons, since the current styling was
+  written with only the light appearance in mind.
+
+This resolves the ticket's open questions (toggle placement, persistence
+scope, and OS-preference precedence) ahead of implementation. It does not
+require a new library, storage system, authentication change, or
+account-level setting — it fits entirely within the existing frontend.
+This approach is now captured as `REQ-049` (toggle, immediate effect,
+light-theme equivalence, legibility), `REQ-050` (per-browser,
+account-independent persistence), and `REQ-051` (OS-preference default
+until an explicit choice is made), traced through `US-029` and
+`AC-080`–`AC-085` in `ACCEPTANCE_CRITERIA.md`.
+
 ### Definition of Done
 
-- [ ] Feature implemented end-to-end
-- [ ] Automated tests added for the new behavior
-- [ ] `REQUIREMENTS.md` / `USER_STORIES.md` / `ACCEPTANCE_CRITERIA.md`
+- [x] Feature implemented end-to-end
+- [x] Automated tests added for the new behavior
+- [x] `REQUIREMENTS.md` / `USER_STORIES.md` / `ACCEPTANCE_CRITERIA.md`
       updated with new numbered entries
-- [ ] No existing `REQ-001`–`REQ-046` behavior changed
+- [x] No existing `REQ-001`–`REQ-046` behavior changed
 - [ ] PR opened per `GITHUB.md`
 
 ---
