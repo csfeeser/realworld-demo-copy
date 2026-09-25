@@ -8,7 +8,7 @@ import FollowButton from "../FollowButton";
 
 function AuthorInfo() {
   const { state } = useLocation();
-  const [{ bio, followersCount, following, image }, setAuthor] = useState(
+  const [{ bio, followersCount, following, image, website, github, twitter, instagram }, setAuthor] = useState(
     state || {}
   );
   const { headers, loggedUser } = useAuth();
@@ -36,6 +36,15 @@ function AuthorInfo() {
       <h4>{username}</h4>
 
       {bio && <Markdown options={{ forceBlock: true }}>{bio}</Markdown>}
+
+      {(website || github || twitter || instagram) && (
+        <div className="social-links">
+          {website && <a href={website} target="_blank" rel="noreferrer">{website}</a>}
+          {github && <a href={github} target="_blank" rel="noreferrer">GitHub</a>}
+          {twitter && <a href={twitter} target="_blank" rel="noreferrer">Twitter/X</a>}
+          {instagram && <a href={instagram} target="_blank" rel="noreferrer">Instagram</a>}
+        </div>
+      )}
 
       {username === loggedUser.username ? (
         <Link

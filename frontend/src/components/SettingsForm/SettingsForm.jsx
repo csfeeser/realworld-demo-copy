@@ -6,12 +6,16 @@ import FormFieldset from "../FormFieldset";
 
 function SettingsForm() {
   const { headers, isAuth, loggedUser, setAuthState } = useAuth();
-  const [{ bio, email, image, password, username }, setForm] = useState({
+  const [{ bio, email, image, password, username, website, github, twitter, instagram }, setForm] = useState({
     bio: loggedUser.bio || "",
     email: loggedUser.email,
     image: loggedUser.image || "",
     password: loggedUser.password || "",
     username: loggedUser.username,
+    website: loggedUser.website || "",
+    github: loggedUser.github || "",
+    twitter: loggedUser.twitter || "",
+    instagram: loggedUser.instagram || "",
   });
 
   const [inactive, setInactive] = useState(false);
@@ -34,7 +38,7 @@ function SettingsForm() {
 
     if (inactive) return;
 
-    userUpdate({ headers, bio, email, image, password, username })
+    userUpdate({ headers, bio, email, image, password, username, website, github, twitter, instagram })
       .then(setAuthState)
       .catch(console.error);
     setInactive(true);
@@ -69,6 +73,38 @@ function SettingsForm() {
               onChange={inputHandler}
             ></textarea>
           </fieldset>
+
+          <FormFieldset
+            normal
+            placeholder="Personal website URL"
+            name="website"
+            value={website}
+            handler={inputHandler}
+          ></FormFieldset>
+
+          <FormFieldset
+            normal
+            placeholder="GitHub profile URL"
+            name="github"
+            value={github}
+            handler={inputHandler}
+          ></FormFieldset>
+
+          <FormFieldset
+            normal
+            placeholder="Twitter/X profile URL"
+            name="twitter"
+            value={twitter}
+            handler={inputHandler}
+          ></FormFieldset>
+
+          <FormFieldset
+            normal
+            placeholder="Instagram profile URL"
+            name="instagram"
+            value={instagram}
+            handler={inputHandler}
+          ></FormFieldset>
 
           <FormFieldset
             placeholder="Email"
