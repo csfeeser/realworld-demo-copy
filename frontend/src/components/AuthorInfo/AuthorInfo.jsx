@@ -18,7 +18,7 @@ function safeUrl(url) {
 function urlUsername(url) {
   try {
     const parts = new URL(url).pathname.split("/").filter(Boolean);
-    return parts[parts.length - 1] || url;
+    return parts[0] || url;
   } catch {
     return url;
   }
@@ -40,7 +40,7 @@ function AuthorInfo() {
         console.error(error);
         navigate("/not-found", { replace: true });
       });
-  }, [username, headers, state, navigate]);
+  }, [username, headers, navigate]);
 
   const followHandler = ({ followersCount, following }) => {
     setAuthor((prev) => ({ ...prev, followersCount, following }));
@@ -53,34 +53,40 @@ function AuthorInfo() {
 
       {bio && <Markdown options={{ forceBlock: true }}>{bio}</Markdown>}
 
-      {(website || github || twitter || instagram) && (
-        <div className="social-links">
-          {safeUrl(website) && (
-            <a className="social-link" href={safeUrl(website)} target="_blank" rel="noreferrer">
-              <img src="/icons/globe.svg" alt="" className="social-icon" />
-              {website}
-            </a>
-          )}
-          {safeUrl(github) && (
-            <a className="social-link" href={safeUrl(github)} target="_blank" rel="noreferrer">
-              <img src="/icons/github.svg" alt="" className="social-icon" />
-              {urlUsername(github)}
-            </a>
-          )}
-          {safeUrl(twitter) && (
-            <a className="social-link" href={safeUrl(twitter)} target="_blank" rel="noreferrer">
-              <img src="/icons/x.svg" alt="" className="social-icon" />
-              {urlUsername(twitter)}
-            </a>
-          )}
-          {safeUrl(instagram) && (
-            <a className="social-link" href={safeUrl(instagram)} target="_blank" rel="noreferrer">
-              <img src="/icons/instagram.svg" alt="" className="social-icon" />
-              {urlUsername(instagram)}
-            </a>
-          )}
-        </div>
-      )}
+      {(website || github || twitter || instagram) && (() => {
+        const safeWebsite  = safeUrl(website);
+        const safeGithub   = safeUrl(github);
+        const safeTwitter  = safeUrl(twitter);
+        const safeInstagram = safeUrl(instagram);
+        return (safeWebsite || safeGithub || safeTwitter || safeInstagram) && (
+          <div className="social-links">
+            {safeWebsite && (
+              <a className="social-link" href={safeWebsite} target="_blank" rel="noreferrer">
+                <img src="/icons/globe.svg" alt="" className="social-icon" />
+                {website}
+              </a>
+            )}
+            {safeGithub && (
+              <a className="social-link" href={safeGithub} target="_blank" rel="noreferrer">
+                <img src="/icons/github.svg" alt="" className="social-icon" />
+                {urlUsername(github)}
+              </a>
+            )}
+            {safeTwitter && (
+              <a className="social-link" href={safeTwitter} target="_blank" rel="noreferrer">
+                <img src="/icons/x.svg" alt="" className="social-icon" />
+                {urlUsername(twitter)}
+              </a>
+            )}
+            {safeInstagram && (
+              <a className="social-link" href={safeInstagram} target="_blank" rel="noreferrer">
+                <img src="/icons/instagram.svg" alt="" className="social-icon" />
+                {urlUsername(instagram)}
+              </a>
+            )}
+          </div>
+        );
+      })()}
 
       {username === loggedUser.username ? (
         <Link
