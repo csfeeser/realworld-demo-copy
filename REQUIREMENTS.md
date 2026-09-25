@@ -405,3 +405,22 @@ tools are not added to any auto-approval allowlist in
 `.claude/settings.json`, so the first use of the server in a session
 requires the normal Claude Code permission prompt rather than running
 unattended.
+
+---
+
+### REQ-049 — Estimated reading time alongside article dates
+Wherever an article's creation date is displayed (REQ-040) — on article
+preview cards and the article detail page — an estimated reading time is
+shown immediately alongside it (e.g., "3 min read"), derived from the
+current word count of the article's body at a fixed rate of 200 words per
+minute, rounded up to the next whole minute. The estimate does not alter
+the existing date format or its position; it is a separate, adjacent
+element.
+
+*Boundary:* An empty, missing, or very short body still produces a minimum
+estimate of "1 min read" rather than "0 min read" or a blank/`NaN` value.
+Because the estimate is computed from the body at render time rather than
+stored, it reflects a newly edited body immediately, without requiring any
+separate update step.
+
+*(Directly verified by `frontend/src/helpers/readingTime.test.js`.)*
