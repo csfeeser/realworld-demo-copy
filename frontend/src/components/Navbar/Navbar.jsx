@@ -18,6 +18,7 @@ function Navbar() {
 
         <ul className="nav navbar-nav pull-xs-right">
           <NavItem text="Home" icon="ion-compose" url="/" />
+          <NavItem text="Directory" icon="ion-ios-people" url="/directory" />
 
           {isAuth && (
             <>
