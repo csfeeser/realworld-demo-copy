@@ -404,6 +404,25 @@ changed.
   use of the server in a session requires an interactive permission
   prompt.
 
+### US-029 — Author stats on the profile page
+*(REQ-049)*
+
+- **AC-080** — Given an author who has published articles, when their
+  profile is viewed, then it displays the total number of articles that
+  author has published.
+- **AC-081** — Given an author whose articles have been favorited, when
+  their profile is viewed, then it displays the total favorite count summed
+  across all of that author's articles.
+- **AC-082** — Given an author's profile, when it is viewed, then it
+  displays a member-since date formatted consistently with other dates
+  shown in the application.
+- **AC-083** — Given an anonymous (unauthenticated) visitor, when they view
+  an author's profile, then the article count, total favorites received,
+  and member-since date are all present.
+- **AC-084** — Given one of an author's articles is deleted, when their
+  profile is loaded again, then the displayed article count reflects the
+  change.
+
 ---
 
 ## Traceability Matrix
@@ -458,3 +477,4 @@ changed.
 | REQ-046 | US-027 | AC-074, AC-075 |
 | REQ-047 | US-028 | AC-076, AC-077 |
 | REQ-048 | US-028 | AC-078, AC-079 |
+| REQ-049 | US-029 | AC-080–AC-084 |

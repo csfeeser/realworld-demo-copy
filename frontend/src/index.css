@@ -26,3 +26,16 @@ button:focus {
   justify-content: center;
   flex-direction: column;
 }
+
+/* Author profile stats (Issue #2). Scoped to .author-stats so the shared
+   Conduit tag styles used by article tags are unaffected. */
+.author-stats .tag-list {
+  margin-bottom: 0.25rem;
+}
+
+.author-stats .tag-default {
+  /* White on #2e7d32 is ~5.1:1 contrast (WCAG AA for normal text); the
+     default Conduit tag grey (#818a91) / outline (#aaa) fall short here. */
+  background-color: #2e7d32;
+}
+
