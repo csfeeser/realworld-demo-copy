@@ -404,6 +404,29 @@ changed.
   use of the server in a session requires an interactive permission
   prompt.
 
+### US-029 — Edit own comment
+*(REQ-049, REQ-050)*
+
+- **AC-080** — Given the comment's author, when they submit an edit with a
+  non-empty body, then the comment's body is updated and the new text is
+  what's returned on subsequent requests for the article's comment list
+  (not just reflected optimistically in the submitting client).
+- **AC-081** — Given a user who is not the comment's author, when they
+  attempt to edit it directly against the API, then the request is
+  rejected with an authorization (403) error and the comment's body is
+  unchanged.
+- **AC-082** — Given no `Authorization` header, when a comment edit is
+  submitted, then the request is rejected with an authentication-required
+  (401) error.
+- **AC-083** — Given the comment's author submits an edit with an empty
+  `body` directly to the API, when submitted, then a field-required error
+  is returned and the comment's body is unchanged.
+- **AC-084** — Given a comment rendered in the client, when the viewer is
+  not that comment's author (including an unauthenticated viewer), then no
+  edit control is shown for that comment; the control is shown only to the
+  comment's own author, mirroring the equivalent rule already applied to
+  the delete control.
+
 ---
 
 ## Traceability Matrix
@@ -458,3 +481,5 @@ changed.
 | REQ-046 | US-027 | AC-074, AC-075 |
 | REQ-047 | US-028 | AC-076, AC-077 |
 | REQ-048 | US-028 | AC-078, AC-079 |
+| REQ-049 | US-029 | AC-080–AC-082, AC-084 |
+| REQ-050 | US-029 | AC-083 |
