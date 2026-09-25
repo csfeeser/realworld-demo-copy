@@ -6,6 +6,15 @@ import getProfile from "../../services/getProfile";
 import Avatar from "../Avatar";
 import FollowButton from "../FollowButton";
 
+function safeUrl(url) {
+  try {
+    const { protocol } = new URL(url);
+    return protocol === "https:" || protocol === "http:" ? url : null;
+  } catch {
+    return null;
+  }
+}
+
 function AuthorInfo() {
   const { state } = useLocation();
   const [{ bio, followersCount, following, image, website, github, twitter, instagram }, setAuthor] = useState(
@@ -37,26 +46,26 @@ function AuthorInfo() {
 
       {(website || github || twitter || instagram) && (
         <div className="social-links">
-          {website && (
-            <a className="social-link" href={website} target="_blank" rel="noreferrer">
+          {safeUrl(website) && (
+            <a className="social-link" href={safeUrl(website)} target="_blank" rel="noreferrer">
               <img src="/icons/globe.svg" alt="" className="social-icon" />
               {website}
             </a>
           )}
-          {github && (
-            <a className="social-link" href={github} target="_blank" rel="noreferrer">
+          {safeUrl(github) && (
+            <a className="social-link" href={safeUrl(github)} target="_blank" rel="noreferrer">
               <img src="/icons/github.svg" alt="" className="social-icon" />
               {github}
             </a>
           )}
-          {twitter && (
-            <a className="social-link" href={twitter} target="_blank" rel="noreferrer">
+          {safeUrl(twitter) && (
+            <a className="social-link" href={safeUrl(twitter)} target="_blank" rel="noreferrer">
               <img src="/icons/x.svg" alt="" className="social-icon" />
               {twitter}
             </a>
           )}
-          {instagram && (
-            <a className="social-link" href={instagram} target="_blank" rel="noreferrer">
+          {safeUrl(instagram) && (
+            <a className="social-link" href={safeUrl(instagram)} target="_blank" rel="noreferrer">
               <img src="/icons/instagram.svg" alt="" className="social-icon" />
               {instagram}
             </a>
