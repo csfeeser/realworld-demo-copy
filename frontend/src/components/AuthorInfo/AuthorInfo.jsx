@@ -46,19 +46,19 @@ function AuthorInfo() {
           {github && (
             <a className="social-link" href={github} target="_blank" rel="noreferrer">
               <img src="/icons/github.svg" alt="" className="social-icon" />
-              GitHub
+              {github}
             </a>
           )}
           {twitter && (
             <a className="social-link" href={twitter} target="_blank" rel="noreferrer">
               <img src="/icons/x.svg" alt="" className="social-icon" />
-              Twitter/X
+              {twitter}
             </a>
           )}
           {instagram && (
             <a className="social-link" href={instagram} target="_blank" rel="noreferrer">
               <img src="/icons/instagram.svg" alt="" className="social-icon" />
-              Instagram
+              {instagram}
             </a>
           )}
         </div>
