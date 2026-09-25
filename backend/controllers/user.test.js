@@ -72,4 +72,54 @@ describe("updateUser", () => {
     expect(loggedUser.password).not.toBe("original-hash");
     await expect(bcryptCompare("", loggedUser.password)).resolves.toBe(true);
   });
+
+  // Profile social links: a submitted socialLinks list is applied like any
+  // other field (consistent with AC-017 partial-update semantics).
+  test("socialLinks is applied when provided", async () => {
+    const loggedUser = makeInstance(
+      { username: "jane", socialLinks: null },
+      { save: vi.fn().mockResolvedValue() },
+    );
+    const links = [{ label: "GitHub", url: "https://github.com/jane" }];
+    const req = {
+      loggedUser,
+      body: { user: { username: "jane", socialLinks: links, password: "" } },
+    };
+
+    await updateUser(req, makeRes(), vi.fn());
+
+    expect(loggedUser.socialLinks).toEqual(links);
+    expect(loggedUser.save).toHaveBeenCalled();
+  });
+
+  // Profile social links: an omitted socialLinks field is left unchanged,
+  // matching the omitted-field rule the other fields follow (AC-017).
+  test("socialLinks is left unchanged when omitted", async () => {
+    const links = [{ label: "Site", url: "https://jane.dev" }];
+    const loggedUser = makeInstance(
+      { username: "jane", socialLinks: links },
+      { save: vi.fn().mockResolvedValue() },
+    );
+    const req = { loggedUser, body: { user: { username: "jane", password: "" } } };
+
+    await updateUser(req, makeRes(), vi.fn());
+
+    expect(loggedUser.socialLinks).toEqual(links);
+  });
+
+  // Profile social links: an empty list clears all links.
+  test("socialLinks: [] clears all links", async () => {
+    const loggedUser = makeInstance(
+      { username: "jane", socialLinks: [{ label: "Site", url: "https://jane.dev" }] },
+      { save: vi.fn().mockResolvedValue() },
+    );
+    const req = {
+      loggedUser,
+      body: { user: { username: "jane", socialLinks: [], password: "" } },
+    };
+
+    await updateUser(req, makeRes(), vi.fn());
+
+    expect(loggedUser.socialLinks).toEqual([]);
+  });
 });

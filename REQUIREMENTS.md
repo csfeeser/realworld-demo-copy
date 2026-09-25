@@ -405,3 +405,80 @@ tools are not added to any auto-approval allowlist in
 `.claude/settings.json`, so the first use of the server in a session
 requires the normal Claude Code permission prompt rather than running
 unattended.
+
+---
+
+### REQ-049 — Author statistics on the profile representation
+A user's profile representation includes three author statistics: the
+number of articles that author has published, the total number of favorites
+those articles have received (summed across all of the author's articles),
+and the date the account was created ("member since"). These statistics are
+included for both authenticated and anonymous requests. They reflect the
+data current as of the request — for example, deleting one of the author's
+articles lowers the article count on the next load — rather than updating
+live within an already-open page. On the profile page, the member-since
+date is displayed formatted consistently with other dates shown in the
+application.
+
+**Boundary:** an author with no published articles reports an article count
+of `0` and a favorites-received total of `0`.
+
+The member-since date is the only account field newly exposed by this
+requirement; the set of fields otherwise returned for a profile is
+unchanged (email, password, and internal identifiers remain omitted), and
+the current-user representation is not affected. This requirement does not
+change the profile's follower count or following flag (REQ-028), the
+article-listing tabs on the profile page, or profile update semantics
+(REQ-011, REQ-012).
+
+---
+
+### REQ-050 — Social links on the profile representation
+A user's profile representation includes a list of social/external links the
+user has set on their account, each consisting of a display label and a URL.
+The list may contain zero or more links and is included for both
+authenticated and anonymous requests. On the profile page, any links the
+author has set are displayed, each linking to the URL provided; a profile
+with no links set displays no links section at all — no empty placeholder —
+appearing exactly as it did before any links were added.
+
+A user sets, changes, or clears these links through the existing profile
+update (REQ-011): the links list is treated as a single such field, so
+submitting it replaces the stored list in full, submitting an empty list
+clears all links, and omitting it from an update leaves the stored list
+unchanged. A link's URL is stored and displayed as entered; it is not
+validated or rewritten.
+
+**Boundary:** a link entered with neither a label nor a URL is discarded when
+settings are saved, so it is neither stored nor displayed.
+
+The social-links list is the only field newly exposed by this requirement;
+the set of fields otherwise returned for a profile is unchanged (email,
+password, and internal identifiers remain omitted). This requirement does not
+change the profile's follower count or following flag (REQ-028), the author
+statistics (REQ-049), the article-listing tabs on the profile page, or the
+update semantics for any other profile field (REQ-011, REQ-012).
+
+---
+
+### REQ-051 — Social link input validation on the settings page
+This requirement refines REQ-050. The account settings page will not save a
+social link unless it has a non-empty URL and a non-empty label of at most 50
+characters. If any entered link violates either rule, the settings are not
+submitted at all — nothing is saved — and the user is shown a message
+identifying the requirement; the previously saved links are left unchanged.
+
+REQ-050's statement that a link's URL is stored and displayed as entered, and
+is not format-checked, sanitized, or rewritten, still holds: this validation
+constrains only the presence of a URL and the presence and length of a label,
+never the URL's format or scheme. A label is capped at 50 characters; there is
+no length or format constraint on the URL beyond it being non-empty.
+
+These constraints are applied by the account settings page when saving.
+Consistent with REQ-050's note, the profile-update API itself does not
+independently enforce them, so this requirement governs the settings-page
+input path rather than the stored representation.
+
+**Boundary:** a link row left with neither a label nor a URL is discarded
+before validation (per REQ-050), so an untouched, empty row is not treated as
+a violation and does not block the save.

@@ -4,6 +4,9 @@ const { makeInstance, makeRes, mockRequire } = require("../test-utils/fakeModels
 const User = { findOne: vi.fn() };
 mockRequire(require.resolve("../models"), { User });
 
+const appendProfileExtras = vi.fn();
+mockRequire(require.resolve("../helper/profileExtras"), { appendProfileExtras });
+
 const { getProfile, followToggler } = require("./profiles");
 
 function makeProfile({ hasFollower = false, followersCount = 0 } = {}) {
@@ -22,6 +25,7 @@ const loggedUser = makeInstance({ id: 2, username: "reader" });
 
 beforeEach(() => {
   User.findOne.mockReset();
+  appendProfileExtras.mockClear();
 });
 
 describe("getProfile", () => {
@@ -46,6 +50,17 @@ describe("getProfile", () => {
     expect(res.json).toHaveBeenCalledWith({ profile });
     expect(profile.dataValues.following).toBe(false);
     expect(profile.dataValues.followersCount).toBe(5);
+  });
+
+  // Author profile stats: getProfile enriches the returned profile via the
+  // shared profileExtras seam.
+  test("enriches the returned profile with author stats", async () => {
+    const profile = makeProfile();
+    User.findOne.mockResolvedValue(profile);
+
+    await getProfile({ loggedUser: undefined, params: { username: "author" } }, makeRes(), vi.fn());
+
+    expect(appendProfileExtras).toHaveBeenCalledWith(profile, { loggedUser: undefined });
   });
 });
 
