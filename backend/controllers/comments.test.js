@@ -10,7 +10,7 @@ const Article = { findOne: vi.fn() };
 const Comment = { create: vi.fn(), findByPk: vi.fn() };
 mockRequire(require.resolve("../models"), { Article, Comment, User: {} });
 
-const { allComments, createComment, deleteComment } = require("./comments");
+const { allComments, createComment, updateComment, deleteComment } = require("./comments");
 
 function makeFollowableUser(overrides = {}) {
   return makeInstance(
@@ -109,6 +109,87 @@ describe("createComment", () => {
 
     expect(Comment.create).toHaveBeenCalledWith(expect.objectContaining({ body: "   " }));
     expect(res.status).toHaveBeenCalledWith(201);
+  });
+});
+
+describe("updateComment", () => {
+  test("no loggedUser -> UnauthorizedError", async () => {
+    const next = vi.fn();
+
+    await updateComment({ loggedUser: undefined, params: {} }, makeRes(), next);
+
+    expect(next.mock.calls[0][0]).toBeInstanceOf(UnauthorizedError);
+  });
+
+  test("nonexistent commentId -> NotFoundError", async () => {
+    Comment.findByPk.mockResolvedValue(null);
+    const next = vi.fn();
+
+    await updateComment(
+      { loggedUser: makeFollowableUser(), params: { commentId: 1 } },
+      makeRes(),
+      next,
+    );
+
+    expect(next.mock.calls[0][0]).toBeInstanceOf(NotFoundError);
+  });
+
+  test("non-author attempts edit -> ForbiddenError, comment not saved", async () => {
+    const comment = makeInstance({ id: 1, userId: 9, body: "original" }, { save: vi.fn().mockResolvedValue() });
+    Comment.findByPk.mockResolvedValue(comment);
+    const next = vi.fn();
+
+    await updateComment(
+      {
+        loggedUser: makeFollowableUser({ id: 2 }),
+        params: { commentId: 1 },
+        body: { comment: { body: "edited" } },
+      },
+      makeRes(),
+      next,
+    );
+
+    expect(next.mock.calls[0][0]).toBeInstanceOf(ForbiddenError);
+    expect(comment.save).not.toHaveBeenCalled();
+  });
+
+  test("empty body -> FieldRequiredError, comment not saved", async () => {
+    const comment = makeInstance({ id: 1, userId: 9, body: "original" }, { save: vi.fn().mockResolvedValue() });
+    Comment.findByPk.mockResolvedValue(comment);
+    const next = vi.fn();
+
+    await updateComment(
+      {
+        loggedUser: makeFollowableUser({ id: 9 }),
+        params: { commentId: 1 },
+        body: { comment: { body: "" } },
+      },
+      makeRes(),
+      next,
+    );
+
+    expect(next.mock.calls[0][0]).toBeInstanceOf(FieldRequiredError);
+    expect(comment.save).not.toHaveBeenCalled();
+  });
+
+  test("comment author edits own comment -> body updated and saved", async () => {
+    const comment = makeInstance({ id: 1, userId: 9, body: "original" }, { save: vi.fn().mockResolvedValue() });
+    Comment.findByPk.mockResolvedValue(comment);
+    const res = makeRes();
+
+    await updateComment(
+      {
+        loggedUser: makeFollowableUser({ id: 9 }),
+        params: { commentId: 1 },
+        body: { comment: { body: "edited" } },
+      },
+      res,
+      vi.fn(),
+    );
+
+    expect(comment.body).toBe("edited");
+    expect(comment.save).toHaveBeenCalled();
+    expect(res.json).toHaveBeenCalledWith({ comment });
   });
 });
 
