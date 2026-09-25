@@ -5336,3 +5336,21 @@ footer {
   font-size: 0.6rem;
   margin-right: 5px;
   cursor: pointer; }
+
+/* Profile social links */
+.social-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin: 8px 0; }
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px; }
+
+.social-icon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.75; }

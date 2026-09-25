@@ -404,6 +404,46 @@ changed.
   use of the server in a session requires an interactive permission
   prompt.
 
+### US-029 — Profile social links
+*(REQ-049)*
+
+- **AC-080** — Given an authenticated user's settings form, when a non-empty
+  URL is submitted for any of the website, github, twitter, or instagram
+  fields, then that URL is stored on the account and returned in subsequent
+  profile and account responses.
+- **AC-081** — Given an authenticated user who has one or more social links
+  stored, when the settings form is submitted with those fields left blank,
+  then the corresponding links are cleared on the account.
+- **AC-082** — Given a user's public profile page, when one or more social
+  links are set on that account, then each link is rendered as a clickable
+  anchor pointing to the stored URL.
+- **AC-083** — Given a user's public profile page, when no social links are
+  set on that account, then the profile renders with no link placeholders or
+  empty elements for those fields.
+- **AC-084** — Given a user's public profile page, when one or more social
+  links are set on that account, then each link is displayed on its own
+  separate line (not concatenated inline with other links).
+- **AC-085** — Given a user's public profile page, when one or more social
+  links are set on that account, then each link is preceded by a
+  service-specific icon that identifies the platform (a globe icon for a
+  personal website, the GitHub mark for a GitHub URL, the Twitter/X bird for
+  Twitter/X, and an Instagram camera icon for Instagram).
+
+### US-030 — Social link URL protocol validation
+*(REQ-050)*
+
+- **AC-086** — Given a settings form submission containing a social link
+  value whose URL scheme is neither `http` nor `https` (for example
+  `javascript:alert(1)` or `ftp://example.com`), when the server processes
+  the request, then it responds with HTTP 422 and the value is not stored.
+- **AC-087** — Given a settings form submission containing a social link
+  value that is an empty string, when the server processes the request,
+  then it is accepted and the stored link is cleared (empty string is not
+  subject to the protocol check).
+- **AC-088** — Given a user's public profile page, when a stored social link
+  value does not parse as an `http` or `https` URL, then that link is not
+  rendered as a clickable anchor (it is suppressed entirely).
+
 ---
 
 ## Traceability Matrix
@@ -458,3 +498,5 @@ changed.
 | REQ-046 | US-027 | AC-074, AC-075 |
 | REQ-047 | US-028 | AC-076, AC-077 |
 | REQ-048 | US-028 | AC-078, AC-079 |
+| REQ-049 | US-029 | AC-080–AC-083 |
+| REQ-050 | US-030 | AC-086–AC-088 |
