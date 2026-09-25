@@ -136,7 +136,7 @@ until an explicit choice is made), traced through `US-029` and
 - [x] `REQUIREMENTS.md` / `USER_STORIES.md` / `ACCEPTANCE_CRITERIA.md`
       updated with new numbered entries
 - [x] No existing `REQ-001`–`REQ-046` behavior changed
-- [ ] PR opened per `GITHUB.md`
+- [x] PR opened per `GITHUB.md` — [#35](https://github.com/csfeeser/realworld-demo-copy/pull/35)
 
 ---
 
