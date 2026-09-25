@@ -405,3 +405,28 @@ tools are not added to any auto-approval allowlist in
 `.claude/settings.json`, so the first use of the server in a session
 requires the normal Claude Code permission prompt rather than running
 unattended.
+
+---
+
+### REQ-049 — Author statistics on the profile representation
+A user's profile representation includes three author statistics: the
+number of articles that author has published, the total number of favorites
+those articles have received (summed across all of the author's articles),
+and the date the account was created ("member since"). These statistics are
+included for both authenticated and anonymous requests. They reflect the
+data current as of the request — for example, deleting one of the author's
+articles lowers the article count on the next load — rather than updating
+live within an already-open page. On the profile page, the member-since
+date is displayed formatted consistently with other dates shown in the
+application.
+
+**Boundary:** an author with no published articles reports an article count
+of `0` and a favorites-received total of `0`.
+
+The member-since date is the only account field newly exposed by this
+requirement; the set of fields otherwise returned for a profile is
+unchanged (email, password, and internal identifiers remain omitted), and
+the current-user representation is not affected. This requirement does not
+change the profile's follower count or following flag (REQ-028), the
+article-listing tabs on the profile page, or profile update semantics
+(REQ-011, REQ-012).
