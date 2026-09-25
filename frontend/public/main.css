@@ -5,6 +5,53 @@
   More info on how to modify the Conduit SASS styles can be found at
   https://github.com/GoThinkster/conduit-sass
 */
+
+/*
+  Theme tokens. Light defaults (bare :root) match today's literal values
+  exactly. Dark values apply when ThemeContext sets data-theme="dark" on
+  <html> (see frontend/src/context/ThemeContext.jsx).
+*/
+:root {
+  --color-bg: #fff;
+  --color-text: #373a3c;
+  --color-border: #ddd;
+  --color-card-shadow: rgba(0, 0, 0, 0.125);
+  --color-article-card-border: #e5e5e5;
+  --color-banner-bg: #333;
+  --color-banner-text: #fff;
+  --color-footer-bg: #f3f3f3;
+  --color-alert-bg: #fcf8e3;
+  --color-form-text: #55595c;
+  --color-form-placeholder: #999;
+  --color-form-disabled-bg: #eceeef;
+  --color-danger-action: #d00;
+  --color-muted-action: #777;
+  --color-sidebar-bg: #f3f3f3;
+  --color-navbar-link: rgba(0, 0, 0, 0.3);
+  --color-navbar-link-hover: rgba(0, 0, 0, 0.6);
+  --color-navbar-link-active: rgba(0, 0, 0, 0.8);
+}
+
+:root[data-theme="dark"] {
+  --color-bg: #1a1a1a;
+  --color-text: #e8e8e8;
+  --color-border: #444;
+  --color-card-shadow: rgba(255, 255, 255, 0.125);
+  --color-article-card-border: #3a3a3a;
+  --color-banner-bg: #2a2a2a;
+  --color-footer-bg: #2a2a2a;
+  --color-alert-bg: #4a4426;
+  --color-form-text: #e8e8e8;
+  --color-form-placeholder: #888;
+  --color-form-disabled-bg: #333;
+  --color-danger-action: #ff6b6b;
+  --color-muted-action: #aaa;
+  --color-sidebar-bg: #2a2a2a;
+  --color-navbar-link: rgba(255, 255, 255, 0.5);
+  --color-navbar-link-hover: rgba(255, 255, 255, 0.75);
+  --color-navbar-link-active: #fff;
+}
+
 .logo-font {
   font-family: "Titillium Web", sans-serif; }
 
@@ -262,8 +309,8 @@ body {
   font-family: "Source Sans Pro", sans-serif;
   font-size: 1rem;
   line-height: 1.5;
-  color: #373a3c;
-  background-color: #fff; }
+  color: var(--color-text, #373a3c);
+  background-color: var(--color-bg, #fff); }
 
 [tabindex="-1"]:focus {
   outline: none !important; }
@@ -467,7 +514,7 @@ small,
 mark,
 .mark {
   padding: 0.2em;
-  background-color: #fcf8e3; }
+  background-color: var(--color-alert-bg, #fcf8e3); }
 
 .list-unstyled {
   padding-left: 0;
@@ -523,8 +570,8 @@ mark,
 
 .img-thumbnail {
   padding: 0.25rem;
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: var(--color-bg, #fff);
+  border: 1px solid var(--color-border, #ddd);
   border-radius: 0.25rem;
   transition: all .2s ease-in-out;
   display: inline-block;
@@ -1663,8 +1710,8 @@ pre {
   padding: 0.5rem 0.75rem;
   font-size: 1rem;
   line-height: 1.25;
-  color: #55595c;
-  background-color: #fff;
+  color: var(--color-form-text, #55595c);
+  background-color: var(--color-bg, #fff);
   background-image: none;
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.15);
@@ -1676,10 +1723,10 @@ pre {
     border-color: #66afe9;
     outline: none; }
   .form-control::placeholder {
-    color: #999;
+    color: var(--color-form-placeholder, #999);
     opacity: 1; }
   .form-control:disabled, .form-control[readonly] {
-    background-color: #eceeef;
+    background-color: var(--color-form-disabled-bg, #eceeef);
     opacity: 1; }
   .form-control:disabled {
     cursor: not-allowed; }
@@ -3109,9 +3156,9 @@ input[type="button"].btn-block {
     color: rgba(0, 0, 0, 0.8); }
 
 .navbar-light .navbar-nav .nav-link {
-  color: rgba(0, 0, 0, 0.3); }
+  color: var(--color-navbar-link, rgba(0, 0, 0, 0.3)); }
   .navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
-    color: rgba(0, 0, 0, 0.6); }
+    color: var(--color-navbar-link-hover, rgba(0, 0, 0, 0.6)); }
 
 .navbar-light .navbar-nav .open > .nav-link, .navbar-light .navbar-nav .open > .nav-link:focus, .navbar-light .navbar-nav .open > .nav-link:hover,
 .navbar-light .navbar-nav .active > .nav-link,
@@ -3123,7 +3170,7 @@ input[type="button"].btn-block {
 .navbar-light .navbar-nav .nav-link.active,
 .navbar-light .navbar-nav .nav-link.active:focus,
 .navbar-light .navbar-nav .nav-link.active:hover {
-  color: rgba(0, 0, 0, 0.8); }
+  color: var(--color-navbar-link-active, rgba(0, 0, 0, 0.8)); }
 
 .navbar-light .navbar-divider {
   background-color: rgba(0, 0, 0, 0.075); }
@@ -3157,9 +3204,9 @@ input[type="button"].btn-block {
   position: relative;
   display: block;
   margin-bottom: 0.75rem;
-  background-color: #fff;
+  background-color: var(--color-bg, #fff);
   border-radius: 0.25rem;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.125); }
+  box-shadow: inset 0 0 0 1px var(--color-card-shadow, rgba(0, 0, 0, 0.125)); }
 
 .card-block {
   padding: 1.25rem; }
@@ -3410,8 +3457,8 @@ input[type="button"].btn-block {
     color: #818a91;
     pointer-events: none;
     cursor: not-allowed;
-    background-color: #fff;
-    border-color: #ddd; }
+    background-color: var(--color-bg, #fff);
+    border-color: var(--color-border, #ddd); }
 
 .page-link {
   position: relative;
@@ -3420,12 +3467,12 @@ input[type="button"].btn-block {
   margin-left: -1px;
   color: #5CB85C;
   text-decoration: none;
-  background-color: #fff;
-  border: 1px solid #ddd; }
+  background-color: var(--color-bg, #fff);
+  border: 1px solid var(--color-border, #ddd); }
   .page-link:focus, .page-link:hover {
     color: #3d8b3d;
-    background-color: #eceeef;
-    border-color: #ddd; }
+    background-color: var(--color-form-disabled-bg, #eceeef);
+    border-color: var(--color-border, #ddd); }
 
 .pagination-lg .page-link {
   padding: 0.75rem 1.5rem;
@@ -5105,12 +5152,11 @@ ul.tag-list {
   .nav-pills.outline-active .nav-link:hover {
     color: #555; }
   .nav-pills.outline-active .nav-link.active {
-    background: #fff !important;
     border-bottom: 2px solid #5CB85C !important;
     color: #5CB85C !important; }
 
 footer {
-  background: #f3f3f3;
+  background: var(--color-footer-bg, #f3f3f3);
   margin-top: 3rem;
   padding: 1rem 0;
   position: absolute;
@@ -5130,8 +5176,8 @@ footer {
   font-weight: bold; }
 
 .banner {
-  color: #fff;
-  background: #333;
+  color: var(--color-banner-text, #fff);
+  background: var(--color-banner-bg, #333);
   padding: 2rem;
   margin-bottom: 2rem; }
   .banner h1 {
@@ -5225,7 +5271,7 @@ footer {
 
 .home-page .sidebar {
   padding: 5px 10px 10px 10px;
-  background: #f3f3f3;
+  background: var(--color-sidebar-bg, #f3f3f3);
   border-radius: 4px; }
   .home-page .sidebar p {
     margin-bottom: 0.2rem; }
@@ -5276,10 +5322,10 @@ footer {
   width: 30px; }
 
 .article-page .card {
-  border: 1px solid #e5e5e5;
+  border: 1px solid var(--color-article-card-border, #e5e5e5);
   box-shadow: none !important; }
   .article-page .card .card-footer {
-    border-top: 1px solid #e5e5e5;
+    border-top: 1px solid var(--color-article-card-border, #e5e5e5);
     box-shadow: none !important;
     font-size: 0.8rem;
     font-weight: 300; }

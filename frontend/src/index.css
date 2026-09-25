@@ -6,7 +6,7 @@
 header {
   top: 0;
   position: sticky;
-  background-color: #fff;
+  background-color: var(--color-bg, #fff);
   z-index: 1;
 }
 
@@ -25,4 +25,9 @@ button:focus {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+
+.theme-toggle-icon {
+  font-size: 1.5rem;
+  vertical-align: middle;
 }
