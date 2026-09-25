@@ -16,8 +16,6 @@ function AuthorInfo() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (state && state.bio === bio) return;
-
     getProfile({ headers, username })
       .then(setAuthor)
       .catch((error) => {
