@@ -15,6 +15,15 @@ function safeUrl(url) {
   }
 }
 
+function urlUsername(url) {
+  try {
+    const parts = new URL(url).pathname.split("/").filter(Boolean);
+    return parts[parts.length - 1] || url;
+  } catch {
+    return url;
+  }
+}
+
 function AuthorInfo() {
   const { state } = useLocation();
   const [{ bio, followersCount, following, image, website, github, twitter, instagram }, setAuthor] = useState(
@@ -55,19 +64,19 @@ function AuthorInfo() {
           {safeUrl(github) && (
             <a className="social-link" href={safeUrl(github)} target="_blank" rel="noreferrer">
               <img src="/icons/github.svg" alt="" className="social-icon" />
-              {github}
+              {urlUsername(github)}
             </a>
           )}
           {safeUrl(twitter) && (
             <a className="social-link" href={safeUrl(twitter)} target="_blank" rel="noreferrer">
               <img src="/icons/x.svg" alt="" className="social-icon" />
-              {twitter}
+              {urlUsername(twitter)}
             </a>
           )}
           {safeUrl(instagram) && (
             <a className="social-link" href={safeUrl(instagram)} target="_blank" rel="noreferrer">
               <img src="/icons/instagram.svg" alt="" className="social-icon" />
-              {instagram}
+              {urlUsername(instagram)}
             </a>
           )}
         </div>
